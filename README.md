@@ -1,4 +1,4 @@
-![Desain tanpa judul (6)](https://github.com/dardarrr/Tracking-and-Counting-with-Slicing-Frame-Video-Biosystem-Engineering-ITERA/assets/117033060/c6e731ae-c391-4295-af19-e590cfbd2b15)![Desain tanpa judul (6)](https://github.com/dardarrr/Tracking-and-Counting-with-Slicing-Frame-Video-Biosystem-Engineering-ITERA/assets/117033060/7394c687-2ca4-4a9b-9a0d-160ea49ee007)
+![Desain tanpa judul (6)](https://github.com/dardarrr/Tracking-and-Counting-with-Slicing-Frame-Video-Biosystem-Engineering-ITERA/assets/117033060/c6e731ae-c391-4295-af19-e590cfbd2b15)
 Tracking and Counting Object with Slicing Frame Video.
 Good for small object detection
 1. Clone this repository
