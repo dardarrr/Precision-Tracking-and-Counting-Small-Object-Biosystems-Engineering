@@ -4,23 +4,34 @@ import numpy as np
 from PIL import Image
 import time
 from sort import *
-import sys
+import argparse
 
-if len(sys.argv)  != 7:
-    print("Usage: python trackcount.py video_path output_video_path model_path line_coords count_label confidence_threshold")
-    sys.exit(1)
 
-video_path = sys.argv[1]
-output_video_path = sys.argv[2]
-model_path = sys.argv[3]
-line_coords = list(map(int, sys.argv[4].split(',')))  # Format koordinat: x1,y1,x2,y2
-count_label = sys.argv[5]
-confidence_threshold = float(sys.argv[6])
+# Inisialisasi argumen
+parser = argparse.ArgumentParser(description='Script description')
+parser.add_argument('--video_path', type=str, help='Path to input video')
+parser.add_argument('--output_video', type=str, help='Path to output video')
+parser.add_argument('--model_path', type=str, help='Path to model')
+parser.add_argument('--line_coords', type=int, nargs=4, help='Coordinates of the line')
+parser.add_argument('--label_count', type=str, help='Label for counted objects')
+parser.add_argument('--confidence_threshold', type=float, help='Confidence threshold')
+
+# Baca argumen dari baris perintah
+args = parser.parse_args()
+
+# Gunakan argumen dalam skrip
+video_path = args.video_path
+output_video = args.output_video
+model_path = args.model_path
+line_coords = args.line_coords
+label_count = args.label_count
+confidence_threshold = args.confidence_threshold
+
 # Inisialisasi video capture dan video writer
 cap = cv2.VideoCapture(video_path)
 frame_width = int(cap.get(3))
 frame_height = int(cap.get(4))
-out = cv2.VideoWriter(output_video_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))
+out = cv2.VideoWriter(output_video, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))
 
 # Inisialisasi tracker
 tracker = Sort(max_age=20, min_hits=3, iou_threshold=0.3)
