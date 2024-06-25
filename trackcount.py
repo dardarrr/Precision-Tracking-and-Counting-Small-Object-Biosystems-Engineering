@@ -142,7 +142,7 @@ while cap.isOpened():
                     counted_ids.add(track_id)  # Tambahkan track_id ke counted_ids
     print('Proses kembali ke frame asli selesai')               
     # Gambar total count dan FPS
-    cv2.putText(frame, f'{count_label}: {total_count}', (20, 90), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 3)
+    cv2.putText(frame, f'{label_count}: {total_count}', (20, 90), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 3)
     end_time = time.perf_counter()
     total_time = end_time - start_time
     fps = 1 / total_time
@@ -158,4 +158,4 @@ while cap.isOpened():
 cap.release()
 out.release()
 cv2.destroyAllWindows()
-print(f'Total Objek: {total_count}')
+print(f'{label_count}: {total_count}')
