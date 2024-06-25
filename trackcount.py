@@ -88,7 +88,7 @@ while cap.isOpened():
     print('proses slicing frame selesai')
     bboxes = []
 
-    for image_slice in slice_image_result:
+    for i, image_slice in enumerate(slice_image_result):
         window = image_slice['image']
         start_x, start_y = image_slice['starting_pixel']
         
