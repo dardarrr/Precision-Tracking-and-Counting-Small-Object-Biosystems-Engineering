@@ -47,8 +47,8 @@ def slice_image(image, slice_height, slice_width, overlap_height_ratio, overlap_
     image_np = np.array(image)
     slices = []
     h, w, _ = image_np.shape
-    step_h = int(slice_height * (1 - overlap_height_ratio))
-    step_w = int(slice_width * (1 - overlap_width_ratio))
+    step_h = int(slice_height)
+    step_w = int(slice_width)
     print(f'Mulai slicing image: {h}x{w}')
     for y in range(0, h, step_h):
         for x in range(0, w, step_w):
