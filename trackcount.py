@@ -15,7 +15,7 @@ parser.add_argument('--model_path', type=str, help='Path to model')
 parser.add_argument('--line_coords', type=int, nargs=4, help='Coordinates of the line')
 parser.add_argument('--label_count', type=str, help='Label for counted objects')
 parser.add_argument('--confidence_threshold', type=float, help='Confidence threshold')
-
+parser.add_argument('--bagi_slice', type=int, help='Coordinates of the line')
 # Baca argumen dari baris perintah
 args = parser.parse_args()
 
@@ -26,7 +26,7 @@ model_path = args.model_path
 line_coords = args.line_coords
 label_count = args.label_count
 confidence_threshold = args.confidence_threshold
-
+bagi_slice = args.bagi_slice
 # Inisialisasi video capture dan video writer
 cap = cv2.VideoCapture(video_path)
 frame_width = int(cap.get(3))
@@ -74,8 +74,8 @@ while cap.isOpened():
     image = Image.fromarray(frame)
     height, width = image.size
 
-    slice_height = int(height / 10)
-    slice_width = int(width / 10)
+    slice_height = int(height / bagi_slice)
+    slice_width = int(width / bagi_slice)
     
     print('Mulai proses slicing frame')
     slice_image_result = slice_image(
