@@ -34,7 +34,7 @@ frame_height = int(cap.get(4))
 out = cv2.VideoWriter(output_video, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))
 
 # Inisialisasi tracker
-tracker = Sort(max_age=20, min_hits=3, iou_threshold=0.3)
+tracker = Sort(max_age=60, min_hits=5, iou_threshold=0.2)
 model = YOLO(model_path)  # Pastikan ini adalah instance model YOLO
 
 # Inisialisasi counter dan garis penghitung
