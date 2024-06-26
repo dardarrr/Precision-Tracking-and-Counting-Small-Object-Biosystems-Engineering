@@ -34,7 +34,7 @@ frame_height = int(cap.get(4))
 out = cv2.VideoWriter(output_video, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))
 
 # Inisialisasi tracker
-tracker = Sort(max_age=100, min_hits=2, iou_threshold=0.2)
+tracker = Sort(max_age=60, min_hits=2, iou_threshold=0.3)
 model = YOLO(model_path)  # Pastikan ini adalah instance model YOLO
 
 # Inisialisasi counter dan garis penghitung
@@ -94,7 +94,7 @@ while cap.isOpened():
         
         print(f'Deteksi objek pada slice {i + 1}/{len(slice_image_result)}')
         # Deteksi objek pada slice
-        results = model(window, conf=confidence_threshold, verbose=False, iou=0.3)
+        results = model(window, conf=confidence_threshold, verbose=False, iou=0.5)
 
         for result in results:
             boxes = result.boxes  # Boxes object for bounding box outputs
