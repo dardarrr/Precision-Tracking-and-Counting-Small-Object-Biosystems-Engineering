@@ -74,8 +74,8 @@ while cap.isOpened():
     image = Image.fromarray(frame)
     height, width = image.size
 
-    slice_height = int(height / 6)
-    slice_width = int(width / 6)
+    slice_height = int(height / 10)
+    slice_width = int(width / 10)
     
     print('Mulai proses slicing frame')
     slice_image_result = slice_image(
