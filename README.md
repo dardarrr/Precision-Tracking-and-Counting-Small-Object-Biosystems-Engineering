@@ -3,7 +3,7 @@ Tracking and Counting Object with Slicing Frame Video.
 Good for small object detection
 1. Clone this repository
    ```
-   git clone
+   git clone https://github.com/dardarrr/Tracking-and-Counting-with-Slicing-Frame-Video-Biosystem-Engineering-ITERA.git
    ```
 2. ```
    cd Tracking-and-Counting-with-Slicing-Frame-Video-Biosystem-Engineering-ITERA
