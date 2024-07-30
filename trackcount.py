@@ -63,7 +63,46 @@ def slice_image(image, slice_height, slice_width, overlap_height_ratio, overlap_
             })
     print(f'Proses slicing selesai, total slices: {len(slices)}')       
     return slices
+def non_max_suppression_fast(boxes, overlapThresh):
+    if len(boxes) == 0:
+        return []
+    
+    if boxes.dtype.kind == "i":
+        boxes = boxes.astype("float")
 
+    pick = []
+    x1 = boxes[:, 0]
+    y1 = boxes[:, 1]
+    x2 = boxes[:, 2]
+    y2 = boxes[:, 3]
+    scores = boxes[:, 4]
+
+    area = (x2 - x1 + 1) * (y2 - y1 + 1)
+    idxs = np.argsort(scores)
+    
+    while len(idxs) > 0:
+        last = len(idxs) - 1
+        i = idxs[last]
+        pick.append(i)
+        suppress = [last]
+        
+        for pos in range(last):
+            j = idxs[pos]
+            xx1 = max(x1[i], x1[j])
+            yy1 = max(y1[i], y1[j])
+            xx2 = min(x2[i], x2[j])
+            yy2 = min(y2[i], y2[j])
+            w = max(0, xx2 - xx1 + 1)
+            h = max(0, yy2 - yy1 + 1)
+            overlap = float(w * h) / area[j]
+
+            if overlap > overlapThresh:
+                suppress.append(pos)
+
+        idxs = np.delete(idxs, suppress)
+
+    return boxes[pick].astype("int")
+    
 while cap.isOpened():
     ret, frame = cap.read()
     if not ret:
@@ -117,8 +156,9 @@ while cap.isOpened():
 
                 bboxes.append([int(x1), int(y1), int(x2), int(y2), conf[i]])
 
-    # Konversi bboxes ke array numpy untuk tracker
-    bboxes = np.array(bboxes)
+    # Non-Maximum Suppression (NMS)
+    if len(bboxes) > 0:
+        bboxes = non_max_suppression_fast(np.array(bboxes), overlapThresh=0.3)
 
     print('Mulai proses kembali ke frame asli')
     # Update tracker
