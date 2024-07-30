@@ -165,11 +165,12 @@ while cap.isOpened():
         if not np.isnan(obj).any():
             x1, y1, x2, y2, track_id = int(obj[0]), int(obj[1]), int(obj[2]), int(obj[3]), int(obj[4])
 
-            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+           
 
             # Hitung pusat objek
             cx = (x1 + x2) // 2
             cy = (y1 + y2) // 2
+            cv2.circle(frame, (cx, cy), 5, (0, 255, 0), -1)
             print('Mulai proses counting')
             # Menghitung objek yang melintasi garis dan berada dalam batas yang ditentukan
             if line_coords[0] < cx < line_coords[2] and line_coords[1] < cy < line_coords[3]:
