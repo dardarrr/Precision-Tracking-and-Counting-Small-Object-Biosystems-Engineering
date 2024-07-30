@@ -47,8 +47,8 @@ def slice_image(image, slice_height, slice_width, overlap_height_ratio, overlap_
     image_np = np.array(image)
     slices = []
     h, w, _ = image_np.shape
-    step_h = int(slice_height)
-    step_w = int(slice_width)
+    step_h = int(slice_height * (1 - overlap_height_ratio))
+    step_w = int(slice_width * (1 - overlap_width_ratio))
     print(f'Mulai slicing image: {h}x{w}')
     for y in range(0, h, step_h):
         for x in range(0, w, step_w):
@@ -63,34 +63,28 @@ def slice_image(image, slice_height, slice_width, overlap_height_ratio, overlap_
             })
     print(f'Proses slicing selesai, total slices: {len(slices)}')       
     return slices
-    
+
 def non_max_suppression_fast(boxes, overlapThresh):
-    # Jika tidak ada bounding boxes, kembalikan array kosong
     if len(boxes) == 0:
         return []
 
-    # Inisialisasi daftar bounding box yang dipilih
+    boxes = np.array(boxes)
     pick = []
 
-    # Ekstrak koordinat bounding box
     x1 = boxes[:, 0]
     y1 = boxes[:, 1]
     x2 = boxes[:, 2]
     y2 = boxes[:, 3]
     score = boxes[:, 4]
 
-    # Hitung area bounding box dan urutkan berdasarkan nilai confidence score
     area = (x2 - x1 + 1) * (y2 - y1 + 1)
     idxs = np.argsort(score)
 
-    # Selama indeks masih ada
     while len(idxs) > 0:
-        # Ambil indeks bounding box dengan nilai confidence tertinggi
         last = len(idxs) - 1
         i = idxs[last]
         pick.append(i)
 
-        # Temukan bounding box yang bertumpang tindih
         xx1 = np.maximum(x1[i], x1[idxs[:last]])
         yy1 = np.maximum(y1[i], y1[idxs[:last]])
         xx2 = np.minimum(x2[i], x2[idxs[:last]])
@@ -101,10 +95,8 @@ def non_max_suppression_fast(boxes, overlapThresh):
 
         overlap = (w * h) / area[idxs[:last]]
 
-        # Hapus bounding box yang bertumpang tindih
         idxs = np.delete(idxs, np.concatenate(([last], np.where(overlap > overlapThresh)[0])))
 
-    # Kembalikan bounding box yang dipilih
     return boxes[pick]
     
 while cap.isOpened():
