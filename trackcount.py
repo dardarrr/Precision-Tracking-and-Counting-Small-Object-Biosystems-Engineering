@@ -63,45 +63,49 @@ def slice_image(image, slice_height, slice_width, overlap_height_ratio, overlap_
             })
     print(f'Proses slicing selesai, total slices: {len(slices)}')       
     return slices
+    
 def non_max_suppression_fast(boxes, overlapThresh):
+    # Jika tidak ada bounding boxes, kembalikan array kosong
     if len(boxes) == 0:
         return []
-    
-    if boxes.dtype.kind == "i":
-        boxes = boxes.astype("float")
 
+    # Inisialisasi daftar bounding box yang dipilih
     pick = []
+
+    # Ekstrak koordinat bounding box
     x1 = boxes[:, 0]
     y1 = boxes[:, 1]
     x2 = boxes[:, 2]
     y2 = boxes[:, 3]
-    scores = boxes[:, 4]
+    score = boxes[:, 4]
 
+    # Hitung area bounding box dan urutkan berdasarkan nilai confidence score
     area = (x2 - x1 + 1) * (y2 - y1 + 1)
-    idxs = np.argsort(scores)
-    
+    idxs = np.argsort(score)
+
+    # Selama indeks masih ada
     while len(idxs) > 0:
+        # Ambil indeks bounding box dengan nilai confidence tertinggi
         last = len(idxs) - 1
         i = idxs[last]
         pick.append(i)
-        suppress = [last]
-        
-        for pos in range(last):
-            j = idxs[pos]
-            xx1 = max(x1[i], x1[j])
-            yy1 = max(y1[i], y1[j])
-            xx2 = min(x2[i], x2[j])
-            yy2 = min(y2[i], y2[j])
-            w = max(0, xx2 - xx1 + 1)
-            h = max(0, yy2 - yy1 + 1)
-            overlap = float(w * h) / area[j]
 
-            if overlap > overlapThresh:
-                suppress.append(pos)
+        # Temukan bounding box yang bertumpang tindih
+        xx1 = np.maximum(x1[i], x1[idxs[:last]])
+        yy1 = np.maximum(y1[i], y1[idxs[:last]])
+        xx2 = np.minimum(x2[i], x2[idxs[:last]])
+        yy2 = np.minimum(y2[i], y2[idxs[:last]])
 
-        idxs = np.delete(idxs, suppress)
+        w = np.maximum(0, xx2 - xx1 + 1)
+        h = np.maximum(0, yy2 - yy1 + 1)
 
-    return boxes[pick].astype("int")
+        overlap = (w * h) / area[idxs[:last]]
+
+        # Hapus bounding box yang bertumpang tindih
+        idxs = np.delete(idxs, np.concatenate(([last], np.where(overlap > overlapThresh)[0])))
+
+    # Kembalikan bounding box yang dipilih
+    return boxes[pick]
     
 while cap.isOpened():
     ret, frame = cap.read()
