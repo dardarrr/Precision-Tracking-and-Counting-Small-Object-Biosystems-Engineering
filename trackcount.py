@@ -179,7 +179,27 @@ while cap.isOpened():
                     counted_ids.add(track_id)  # Tambahkan track_id ke counted_ids
     print('Proses kembali ke frame asli selesai')               
     # Gambar total count dan FPS
-    cv2.putText(frame, f'{label_count}: {total_count}', (20, 90), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 3)
+    # Gambar oval di sekitar teks label count
+    center_coordinates = (160, 70)  # Koordinat pusat oval
+    axes_length = (150, 40)  # Panjang sumbu utama dan sumbu minor
+    angle = 0  # Sudut rotasi dari oval
+    start_angle = 0  # Mulai dari sudut
+    end_angle = 360  # Akhir pada sudut 360 derajat (lingkaran penuh)
+
+    # Gambar bingkai oval (hitam)
+    cv2.ellipse(frame, center_coordinates, axes_length, angle, start_angle, end_angle, color=(0, 0, 0), thickness=4)
+
+    # Gambar oval utama (putih)
+    cv2.ellipse(frame, center_coordinates, axes_length, angle, start_angle, end_angle, color=(255, 255, 255), thickness=-1)
+
+    # Gambar total count di dalam oval
+    cv2.putText(frame, f'{label_count}: {total_count}', (70, 85), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
+
+    # Gambar garis penghitung (bingkai hitam)
+    cv2.line(frame, (line_coords[0], line_coords[1]), (line_coords[2], line_coords[3]), color=(0, 0, 0), thickness=4)
+
+    # Gambar garis penghitung (garis putih di atas bingkai hitam)
+    cv2.line(frame, (line_coords[0], line_coords[1]), (line_coords[2], line_coords[3]), color=(255, 255, 255), thickness=2)
     end_time = time.perf_counter()
     total_time = end_time - start_time
     fps = 1 / total_time
