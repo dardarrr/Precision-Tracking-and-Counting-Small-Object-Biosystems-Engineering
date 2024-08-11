@@ -180,19 +180,28 @@ while cap.isOpened():
     print('Proses kembali ke frame asli selesai')               
     # Gambar total count dan FPS
     # Gambar persegi panjang dengan sudut melengkung untuk label count
+    text = f'{label_count}: {total_count}'
+    font_scale = 2
+    thickness = 3
+    font = cv2.FONT_HERSHEY_SIMPLEX
+
+# Dapatkan ukuran teks
+    (text_width, text_height), baseline = cv2.getTextSize(text, font, font_scale, thickness)
+
+# Tentukan koordinat untuk kotak persegi panjang
     rect_start = (50, 60)  # Koordinat pojok kiri atas persegi panjang
-    rect_end = (400, 160)  # Koordinat pojok kanan bawah persegi panjang
-    rect_color = (255, 255, 255)  # Warna latar belakang putih
-    border_color = (0, 0, 0)  # Warna bingkai hitam
+    rect_end = (50 + text_width + 40, 60 + text_height + 40)  # Tambahkan padding 20 ke setiap sisi
 
 # Gambar bingkai persegi panjang
-    cv2.rectangle(frame, rect_start, rect_end, border_color, thickness=4, lineType=cv2.LINE_AA)
+    cv2.rectangle(frame, rect_start, rect_end, (0, 0, 0), thickness=4, lineType=cv2.LINE_AA)
 
 # Gambar isi persegi panjang dengan warna putih
-    cv2.rectangle(frame, rect_start, rect_end, rect_color, thickness=-1, lineType=cv2.LINE_AA)
+    cv2.rectangle(frame, rect_start, rect_end, (255, 255, 255), thickness=-1, lineType=cv2.LINE_AA)
 
-# Gambar teks label_count di dalam persegi panjang
-    cv2.putText(frame, f'{label_count}: {total_count}', (70, 130), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 0), 3, lineType=cv2.LINE_AA)
+# Gambar teks di dalam persegi panjang
+    text_x = rect_start[0] + 20  # Posisi teks X (dengan padding 20)
+    text_y = rect_start[1] + text_height + 20  # Posisi teks Y (dengan padding 20)
+    cv2.putText(frame, text, (text_x, text_y), font, font_scale, (0, 0, 0), thickness, lineType=cv2.LINE_AA)
 
 
     # Gambar garis penghitung (bingkai hitam)
