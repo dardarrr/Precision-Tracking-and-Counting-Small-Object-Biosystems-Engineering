@@ -98,13 +98,13 @@ def non_max_suppression_fast(boxes, overlapThresh):
         idxs = np.delete(idxs, np.concatenate(([last], np.where(overlap > overlapThresh)[0])))
 
     return boxes[pick]
-    
+# Catat waktu mulai
+start_process_time = time.perf_counter() 
+
 while cap.isOpened():
     ret, frame = cap.read()
     if not ret:
         break
-
-    start_time = time.perf_counter()
 
     image = Image.fromarray(frame)
     height, width = image.size
@@ -223,4 +223,12 @@ while cap.isOpened():
 cap.release()
 out.release()
 cv2.destroyAllWindows()
+
+# Catat waktu selesai
+end_process_time = time.perf_counter()
+
+# Hitung total waktu proses
+total_process_time = end_process_time - start_process_time
+
 print(f'{label_count}: {total_count}')
+print(f'Total waktu proses: {total_process_time:.2f} detik')
