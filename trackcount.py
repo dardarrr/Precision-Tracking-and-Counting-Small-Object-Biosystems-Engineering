@@ -180,8 +180,8 @@ while cap.isOpened():
     print('Proses kembali ke frame asli selesai')               
     # Gambar total count dan FPS
     # Gambar oval di sekitar teks label count
-    center_coordinates = (160, 70)  # Koordinat pusat oval
-    axes_length = (150, 40)  # Panjang sumbu utama dan sumbu minor
+    center_coordinates = (150, 100)  # Koordinat pusat oval
+    axes_length = (200, 50)  # Panjang sumbu utama dan sumbu minor
     angle = 0  # Sudut rotasi dari oval
     start_angle = 0  # Mulai dari sudut
     end_angle = 360  # Akhir pada sudut 360 derajat (lingkaran penuh)
