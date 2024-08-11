@@ -209,9 +209,6 @@ while cap.isOpened():
 
     # Gambar garis penghitung (garis putih di atas bingkai hitam)
     cv2.line(frame, (line_coords[0], line_coords[1]), (line_coords[2], line_coords[3]), color=(255, 255, 255), thickness=2)
-    end_time = time.perf_counter()
-    total_time = end_time - start_time
-    fps = 1 / total_time
    
 
     # Tulis frame ke file output
