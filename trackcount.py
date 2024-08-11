@@ -179,21 +179,20 @@ while cap.isOpened():
                     counted_ids.add(track_id)  # Tambahkan track_id ke counted_ids
     print('Proses kembali ke frame asli selesai')               
     # Gambar total count dan FPS
-    # Gambar oval di sekitar teks label count
-    center_coordinates = (150, 100)  # Koordinat pusat oval
-    axes_length = (200, 50)  # Panjang sumbu utama dan sumbu minor
-    angle = 0  # Sudut rotasi dari oval
-    start_angle = 0  # Mulai dari sudut
-    end_angle = 360  # Akhir pada sudut 360 derajat (lingkaran penuh)
+    # Gambar persegi panjang dengan sudut melengkung untuk label count
+    rect_start = (50, 60)  # Koordinat pojok kiri atas persegi panjang
+    rect_end = (300, 140)  # Koordinat pojok kanan bawah persegi panjang
+    rect_color = (255, 255, 255)  # Warna latar belakang abu-abu muda
+    border_color = (0, 0, 0)  # Warna bingkai hitam
 
-    # Gambar bingkai oval (hitam)
-    cv2.ellipse(frame, center_coordinates, axes_length, angle, start_angle, end_angle, color=(0, 0, 0), thickness=4)
+# Gambar bingkai persegi panjang
+    cv2.rectangle(frame, rect_start, rect_end, border_color, thickness=4, lineType=cv2.LINE_AA)
 
-    # Gambar oval utama (putih)
-    cv2.ellipse(frame, center_coordinates, axes_length, angle, start_angle, end_angle, color=(255, 255, 255), thickness=-1)
+# Gambar isi persegi panjang dengan warna abu-abu muda
+    cv2.rectangle(frame, rect_start, rect_end, rect_color, thickness=-1, lineType=cv2.LINE_AA)
 
-    # Gambar total count di dalam oval
-    cv2.putText(frame, f'{label_count}: {total_count}', (70, 85), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)
+# Gambar teks label_count di dalam persegi panjang
+    cv2.putText(frame, f'{label_count}: {total_count}', (70, 120), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 0), 3, lineType=cv2.LINE_AA)
 
     # Gambar garis penghitung (bingkai hitam)
     cv2.line(frame, (line_coords[0], line_coords[1]), (line_coords[2], line_coords[3]), color=(0, 0, 0), thickness=4)
