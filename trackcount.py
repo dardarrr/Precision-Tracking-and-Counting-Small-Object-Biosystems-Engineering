@@ -168,23 +168,13 @@ while cap.isOpened():
             # Hitung pusat objek
             cx = (x1 + x2) // 2
             cy = (y1 + y2) // 2
-            # Periksa apakah objek sudah dihitung
-            if track_id in counted_ids:
-            # Jika sudah dihitung, gunakan warna hijau
-                color = (0, 255, 0)  # Hijau
-            else:
-            # Jika belum dihitung, gunakan warna merah
-                color = (0, 0, 255)  # Merah
+            cv2.circle(frame, (cx, cy), 5, (0, 0, 255), -1)
             print('Mulai proses counting')
             # Menghitung objek yang melintasi garis dan berada dalam batas yang ditentukan
             if line_coords[0] < cx < line_coords[2] and line_coords[1] < cy < line_coords[3]:
                 if track_id not in counted_ids:  # Periksa apakah objek sudah dihitung
                     total_count += 1  # Tambahkan count jika objek belum dihitung
                     counted_ids.add(track_id)  # Tambahkan track_id ke counted_ids
-                 # Ubah warna titik jika objek sudah melewati garis
-                color = (0, 255, 0)  # Hijau  
-          # Gambar lingkaran di pusat objek
-            cv2.circle(frame, (cx, cy), 5, color, -1)  
     print('Proses kembali ke frame asli selesai')               
     # Gambar total count dan FPS
     # Gambar persegi panjang dengan sudut melengkung untuk label count
