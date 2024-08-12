@@ -179,7 +179,7 @@ while cap.isOpened():
                  # Ubah warna titik jika objek sudah melewati garis
                 color = (0, 255, 0)  # Hijau  
           # Gambar lingkaran di pusat objek
-             cv2.circle(frame, (cx, cy), 5, color, -1)  
+            cv2.circle(frame, (cx, cy), 5, color, -1)  
     print('Proses kembali ke frame asli selesai')               
     # Gambar total count dan FPS
     # Gambar persegi panjang dengan sudut melengkung untuk label count
