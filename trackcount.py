@@ -168,8 +168,13 @@ while cap.isOpened():
             # Hitung pusat objek
             cx = (x1 + x2) // 2
             cy = (y1 + y2) // 2
-            # Default warna titik (sebelum melewati garis)
-            color = (0, 0, 255)  # Merah
+            # Periksa apakah objek sudah dihitung
+            if track_id in counted_ids:
+            # Jika sudah dihitung, gunakan warna hijau
+                color = (0, 255, 0)  # Hijau
+            else:
+            # Jika belum dihitung, gunakan warna merah
+                color = (0, 0, 255)  # Merah
             print('Mulai proses counting')
             # Menghitung objek yang melintasi garis dan berada dalam batas yang ditentukan
             if line_coords[0] < cx < line_coords[2] and line_coords[1] < cy < line_coords[3]:
